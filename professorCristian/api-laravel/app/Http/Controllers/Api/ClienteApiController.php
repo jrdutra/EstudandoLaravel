@@ -59,7 +59,31 @@ class ClienteApiController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        if(!$data = $this->cliente->find($id))
+            return response()->json(['error' => 'Nada foi encontrado'], 404);
+
+        $this->validate($request, $this->cliente->rules());
+        $dataForm = $request->all();
+
+        if($request->hasFile('image') && $request->file('image')->isValid()){
+            
+            if($data->image){
+                Storage::disk('public')->delete("/clientes/$data->image");
+            }
+            
+            $extension = $request->image->extension();
+            $name = uniqid(date('His'));
+            $nameFile = "{$name}.{$extension}";
+            $upload = Image::make($dataForm['image'])->resize(177, 236)->save(storage_path("app/public/clientes/$nameFile", 70));
+            if(!$upload){
+                return response()->json(['error'=>'Falha ao fazer upload'], 500);
+            }else{
+                $dataForm['image'] = $nameFile;
+            }
+        }
+        $data->update($dataForm);
+        return response()->json($data);
+
     }
 
     public function destroy($id)
@@ -74,7 +98,7 @@ class ClienteApiController extends Controller
 
         $data->delete();
         
-        return response()->json(['succes' => 'Deletado com sucesso'], 410);
+        return response()->json(['succes' => 'Deletado com sucesso'], 200);
 
     }
 }
