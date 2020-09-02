@@ -47,7 +47,7 @@ composer create-project laravel/laravel aprendendo-laravel --prefer-dist
 
 **Startar o projeto Laravel:**
 
-php artisan serve --host=localhost --port=82
+sudo php artisan serve --host=localhost --port=82
 
 
 ## Possíveis Erros:
