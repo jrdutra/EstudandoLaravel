@@ -38,3 +38,13 @@ sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 composer
 
 *Resultado:* Deve aparecer o logo do composer desenhado em barras no terminal
+
+## Laravel:
+
+**Iniciar o projeto Laravel:**
+
+composer create-project laravel/laravel aprendendo-laravel --prefer-dist
+
+**Startar o projeto Laravel**
+
+php artisan serve --host=localhost --port=82
