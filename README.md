@@ -1,7 +1,7 @@
-## Passos para instalar o Laravel + Composer(LINUX):
+# Passos para instalar o Laravel + Composer(LINUX):
 
 
-# Composer:
+## Composer:
 
 
 sudo apt update
