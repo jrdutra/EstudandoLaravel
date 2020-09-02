@@ -45,7 +45,16 @@ class ClienteApiController extends Controller
 
     public function show($id)
     {
-        //
+        if(!$data = $this->cliente->find($id)){
+
+            return response()->json(['error' => 'Nada foi encontrado'], 404);
+
+        }else{
+
+            return response()->json($data);
+
+        }
+
     }
 
     public function update(Request $request, $id)
@@ -55,6 +64,17 @@ class ClienteApiController extends Controller
 
     public function destroy($id)
     {
-        //
+        
+        if(!$data = $this->cliente->find($id))
+            return response()->json(['error' => 'Nada foi encontrado'], 404);
+        
+        if($data->image){
+            Storage::disk('public')->delete("/clientes/$data->image");
+        }
+
+        $data->delete();
+        
+        return response()->json(['succes' => 'Deletado com sucesso'], 410);
+
     }
 }
