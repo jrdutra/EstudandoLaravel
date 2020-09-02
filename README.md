@@ -1,6 +1,6 @@
-# Passos para instalar o Laravel + Composer:
+# Passos para instalar o Laravel + Composer: #
 
-(LINUX)
+# (LINUX) #
 
 
 ## Composer:
