@@ -48,3 +48,18 @@ composer create-project laravel/laravel aprendendo-laravel --prefer-dist
 **Startar o projeto Laravel:**
 
 php artisan serve --host=localhost --port=82
+
+
+## Possíveis Erros:
+
+**Para:**
+
+failed to open stream: No such file or directory in...
+
+**Tentar**
+
+php artisan config:cache 
+
+php artisan config:clear 
+
+composer dump-autoload -o
