@@ -1,5 +1,6 @@
 #!/bin/bash
 git add --all
-git commit -m "Estudando"
+read -p 'Mensagem: ' MSG
+git commit -m $MSG
 git push
 read
