@@ -37,18 +37,4 @@ sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 
 composer
 
-*Resultado:*
-
-   ______
-
-  / ____/___  ____ ___  ____  ____  ________  _____
-
- / /   / __ \/ __ `__ \/ __ \/ __ \/ ___/ _ \/ ___/
-
-/ /___/ /_/ / / / / / / /_/ / /_/ (__  )  __/ /
-
-\____/\____/_/ /_/ /_/ .___/\____/____/\___/_/
-
-                    /_/
-
-
+*Resultado:* Deve aparecer o logo do composer desenhado em barras no terminal
