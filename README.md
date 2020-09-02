@@ -82,8 +82,16 @@ php artisan migrate:refresh
 
 php artisan storage:link
 
-**Limpar Cache**
+**Limpar Cache:**
 
 sudo php artisan config:cache
+
+**Instalar Intervention/Image**
+
+composer require intervention/image
+
+php --version
+
+sudo apt-get install php7.2-gd
 
 
