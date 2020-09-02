@@ -63,3 +63,7 @@ php artisan config:cache
 php artisan config:clear 
 
 composer dump-autoload -o
+
+**OU**
+
+Deletar a pasta *vendor* e o arquivo *composer.lock* e rodar o comando *composer install*
