@@ -67,3 +67,14 @@ composer dump-autoload -o
 **OU**
 
 Deletar a pasta *vendor* e o arquivo *composer.lock* e rodar o comando *composer install*
+
+## Comandos úteis Laravel:
+
+**Para criar base:**
+
+ php artisan migrate
+
+**Para atualizar base:**
+
+php artisan migrate:refresh
+
