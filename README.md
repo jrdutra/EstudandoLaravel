@@ -78,3 +78,12 @@ Deletar a pasta *vendor* e o arquivo *composer.lock* e rodar o comando *composer
 
 php artisan migrate:refresh
 
+**Criar link com a pasta Storage:**
+
+php artisan storage:link
+
+**Limpar Cache**
+
+sudo php artisan config:cache
+
+
