@@ -86,7 +86,7 @@ php artisan storage:link
 
 sudo php artisan config:cache
 
-**Instalar Intervention/Image**
+**Instalar Intervention/Image:**
 
 composer require intervention/image
 
