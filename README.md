@@ -94,4 +94,13 @@ php --version
 
 sudo apt-get install php7.2-gd
 
+# VUE.js
+
+## Comandos importantes
+
+**Rodar o projeto**
+
+Dentro da pasta do projeto, executar o seguinte comando:
+
+```npm run dev```
 
