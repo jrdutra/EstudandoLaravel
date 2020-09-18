@@ -1,5 +1,8 @@
 <template>
-  <h2>Social</h2>
+  <div>
+    <h2>SOCIAL</h2>
+    <a class="waves-effect waves-light btn"><i class="material-icons left">cloud</i>button</a>
+  </div>
 </template>
 
 <script>
