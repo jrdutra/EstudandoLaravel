@@ -7,7 +7,7 @@
 <script>
 export default {
   name: "CardMenuVue",
-  props: ["tamanho"],
+  props: [],
   data() {
     return {};
   }

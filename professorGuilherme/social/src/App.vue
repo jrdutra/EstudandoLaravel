@@ -26,6 +26,9 @@
                 </div>
               </div>
             </card-menu-vue>
+            <card-menu-vue>
+              <h4>Teste</h4>
+            </card-menu-vue>
           </grid-vue>
           <grid-vue tamanho="8">
             <router-view />
