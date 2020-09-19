@@ -8,11 +8,13 @@
       />
     </span>
     <span slot="principal">
-      <h4>Login</h4>
+      <h4>Cadastro</h4>
+      <input type="text" placeholder="Nome" value />
       <input type="text" placeholder="E-mail" value />
       <input type="password" placeholder="Senha" value />
-      <button class="btn">Entrar</button>
-      <router-link to="/cadastro" class="btn orange">Cadastrar</router-link>
+      <input type="password" placeholder="Repetir Senha" value />
+      <button class="btn">Enviar</button>
+      <router-link to="/login" class="btn red">Já tenho conta</router-link>
     </span>
   </login-template>
 </template>
@@ -20,7 +22,7 @@
 <script>
 import LoginTemplate from "@/templates/LoginTemplate";
 export default {
-  name: "Login",
+  name: "Cadastro",
   components: {
     LoginTemplate,
   },

@@ -8,6 +8,9 @@
         <li>
           <router-link to="/login">Entrar</router-link>
         </li>
+        <li>
+          <router-link to="/cadastro">Cadastro</router-link>
+        </li>
       </nav-bar>
     </header>
     <main>
