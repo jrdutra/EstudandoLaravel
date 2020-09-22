@@ -68,6 +68,24 @@ composer dump-autoload -o
 
 Deletar a pasta *vendor* e o arquivo *composer.lock* e rodar o comando *composer install*
 
+**Para erro de CORS ORIGIN**
+
+Corre php artisan make:middleware ModifyHeadersMiddleware
+
+Abra o arquivo **ModifyHeadersMiddleware** e altere o método handle():
+
+```public function handle($request, Closure $next) 
+{ 
+    $response = $next($request); 
+    $response->header('Access-Control-Allow-Origin', '*'); 
+    $response->header('Access-Control-Allow-Headers', 'Origin, Content-Type'); 
+
+    return $response; 
+} ```
+Abra app / Http / Kernel.php e adicione a classe ModifyHeadersMiddlewar e na matriz .protected $middleware
+
+Fonte: [https://stackoverrun.com/ru/q/10354933 ](https://stackoverrun.com/ru/q/10354933 )
+
 ## Comandos úteis Laravel:
 
 **Para criar base:**
@@ -100,7 +118,7 @@ sudo apt-get install php7.2-gd
 
 ```composer create-project --prefer-dist laravel/laravel webservice "5.7.15" ```
 
-```composer require laravel/passport  "7.5.1"```
+```composer require laravel/passport  "7.5.1" ```
 
 # VUE.js
 
@@ -111,6 +129,8 @@ sudo apt-get install php7.2-gd
 Dentro da pasta do projeto, executar o seguinte comando:
 
 ```npm run dev```
+
+
 
 
 

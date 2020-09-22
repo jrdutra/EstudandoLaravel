@@ -9,9 +9,9 @@
     </span>
     <span slot="principal">
       <h4>Login</h4>
-      <input type="text" placeholder="E-mail" value />
-      <input type="password" placeholder="Senha" value />
-      <button class="btn">Entrar</button>
+      <input type="text" placeholder="E-mail" v-model="email" />
+      <input type="password" placeholder="Senha" v-model="password" />
+      <button class="btn" v-on:click="login()">Entrar</button>
       <router-link to="/cadastro" class="btn orange">Cadastrar</router-link>
     </span>
   </login-template>
@@ -19,14 +19,35 @@
 
 <script>
 import LoginTemplate from "@/templates/LoginTemplate";
+import axios from 'axios';
+
 export default {
   name: "Login",
   components: {
     LoginTemplate,
   },
   data() {
-    return {};
+    return {
+
+      email:'',
+      password:''
+
+    };
   },
+  methods:{
+    login(){
+      axios.post('http://127.0.0.1:8000/api/login', {
+        email: this.email,
+        password: this.password
+      })
+      .then(response=>{
+        console.log(response.data)
+      })
+      .catch(e=>{
+        console.log(e)
+      });
+    }
+  }
 };
 </script>
 
