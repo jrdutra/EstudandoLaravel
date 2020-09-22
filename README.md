@@ -94,6 +94,14 @@ php --version
 
 sudo apt-get install php7.2-gd
 
+## Compatibilidades de Pacotes
+
+**Laravel com Passport
+
+```composer create-project --prefer-dist laravel/laravel webservice "5.7.15" ```
+
+```composer require laravel/passport  "7.5.1"```
+
 # VUE.js
 
 ## Comandos importantes
@@ -103,4 +111,6 @@ sudo apt-get install php7.2-gd
 Dentro da pasta do projeto, executar o seguinte comando:
 
 ```npm run dev```
+
+
 
