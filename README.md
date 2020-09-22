@@ -74,14 +74,16 @@ Corre php artisan make:middleware ModifyHeadersMiddleware
 
 Abra o arquivo **ModifyHeadersMiddleware** e altere o método handle():
 
-```public function handle($request, Closure $next) 
+```
+public function handle($request, Closure $next) 
 { 
     $response = $next($request); 
     $response->header('Access-Control-Allow-Origin', '*'); 
     $response->header('Access-Control-Allow-Headers', 'Origin, Content-Type'); 
 
     return $response; 
-} ```
+} 
+```
 Abra app / Http / Kernel.php e adicione a classe ModifyHeadersMiddlewar e na matriz .protected $middleware
 
 Fonte: [https://stackoverrun.com/ru/q/10354933 ](https://stackoverrun.com/ru/q/10354933 )
@@ -116,9 +118,13 @@ sudo apt-get install php7.2-gd
 
 **Laravel com Passport**
 
-```composer create-project --prefer-dist laravel/laravel webservice "5.7.15" ```
+```
+composer create-project --prefer-dist laravel/laravel webservice "5.7.15"
+```
 
-```composer require laravel/passport  "7.5.1" ```
+```
+composer require laravel/passport  "7.5.1"
+```
 
 # VUE.js
 
@@ -128,7 +134,9 @@ sudo apt-get install php7.2-gd
 
 Dentro da pasta do projeto, executar o seguinte comando:
 
-```npm run dev```
+```
+npm run dev
+```
 
 
 
