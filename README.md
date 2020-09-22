@@ -96,7 +96,7 @@ sudo apt-get install php7.2-gd
 
 ## Compatibilidades de Pacotes
 
-**Laravel com Passport
+**Laravel com Passport**
 
 ```composer create-project --prefer-dist laravel/laravel webservice "5.7.15" ```
 
