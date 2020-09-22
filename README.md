@@ -52,7 +52,7 @@ sudo php artisan serve --host=localhost --port=82
 
 ## Possíveis Erros:
 
-**Para:**
+**Para o seguinte erro:**
 
 failed to open stream: No such file or directory in...
 
@@ -68,7 +68,7 @@ composer dump-autoload -o
 
 Deletar a pasta *vendor* e o arquivo *composer.lock* e rodar o comando *composer install*
 
-**Para erro de CORS ORIGIN**
+**Para erro de CORS ORIGIN:**
 
 Corre php artisan make:middleware ModifyHeadersMiddleware
 
