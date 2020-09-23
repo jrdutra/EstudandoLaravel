@@ -9,11 +9,11 @@
     </span>
     <span slot="principal">
       <h4>Cadastro</h4>
-      <input type="text" placeholder="Nome" value />
-      <input type="text" placeholder="E-mail" value />
-      <input type="password" placeholder="Senha" value />
-      <input type="password" placeholder="Repetir Senha" value />
-      <button class="btn">Enviar</button>
+      <input type="text" placeholder="Nome" v-model="name" />
+      <input type="text" placeholder="E-mail" v-model="email" />
+      <input type="password" placeholder="Senha" v-model="password" />
+      <input type="password" placeholder="Repetir Senha" v-model="password_confirmation" />
+      <button class="btn" v-on:click="cadastro()">Enviar</button>
       <router-link to="/login" class="btn red">Já tenho conta</router-link>
     </span>
   </login-template>
@@ -21,14 +21,52 @@
 
 <script>
 import LoginTemplate from "@/templates/LoginTemplate";
+import axios from 'axios';
 export default {
   name: "Cadastro",
   components: {
     LoginTemplate,
   },
   data() {
-    return {};
+    return {
+      name:'',
+      email:'',
+      password:'',
+      password_confirmation:''
+    };
   },
+    methods:{
+    cadastro(){
+      axios.post('http://127.0.0.1:8000/api/cadastro', {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        password_confirmation: this.password_confirmation
+      })
+      .then(response=>{
+        if(response.data.token){
+          //login com sucesso
+          sessionStorage.setItem('usuario',  JSON.stringify(response.data));
+          this.$router.push('/');
+        }else if (response.data.status == false){
+          //login nao existe
+          alert("Erro ao cadastrar")
+        }else{
+          //erros de validacao
+          console.log("erros de validacao");
+          let erros = '';
+          for(let erro of Object.values(response.data)){
+            erros += erro + " ";
+          }
+          alert(erros);
+        }
+      })
+      .catch(e=>{
+        console.log(e)
+        alert("Erro: Tente novamente mais tarde.")
+      });
+    }
+  }
 };
 </script>
 
