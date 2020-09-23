@@ -37,6 +37,7 @@ import CardConteudoVue from "@/components/social/CardConteudoVue";
 import SiteTemplate from "@/templates/SiteTemplate";
 import CardDetalheVue from "@/components/social/CardDetalheVue";
 import PublicarConteudoVue from "@/components/social/PublicarConteudoVue";
+import GridVue from "@/components/layouts/GridVue";
 export default {
   name: "Home",
   components: {
@@ -44,6 +45,7 @@ export default {
     CardDetalheVue,
     PublicarConteudoVue,
     SiteTemplate,
+    GridVue
   },
   data() {
     return {};
