@@ -21,4 +21,6 @@ class ModifyHeadersMiddleware
 
         return $response;
     }
+
+
 }

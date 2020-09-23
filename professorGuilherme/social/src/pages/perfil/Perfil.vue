@@ -24,7 +24,7 @@
 
       <input type="password" placeholder="Senha" v-model="password" />
       <input type="password" placeholder="Repetir Senha" v-model="password_confirmation" />
-      <button class="btn" v-on:click="perfil()">Enviar</button>
+      <button class="btn" v-on:click="perfil()">Atualizar</button>
     </span>
   </site-template>
 </template>
@@ -57,33 +57,23 @@ export default {
   methods: {
     perfil() {
       axios
-        .post("http://127.0.0.1:8000/api/cadastro", {
+        .put("http://127.0.0.1:8000/api/perfil", {
           name: this.name,
           email: this.email,
           password: this.password,
           password_confirmation: this.password_confirmation,
+        },
+        {"headers":
+          {
+          "authorization": "Bearer " + this.usuario.token
+          }
         })
         .then((response) => {
-          if (response.data.token) {
-            //login com sucesso
-            sessionStorage.setItem("usuario", JSON.stringify(response.data));
-            this.$router.push("/");
-          } else if (response.data.status == false) {
-            //login nao existe
-            alert("Erro ao cadastrar");
-          } else {
-            //erros de validacao
-            console.log("erros de validacao");
-            let erros = "";
-            for (let erro of Object.values(response.data)) {
-              erros += erro + " ";
-            }
-            alert(erros);
-          }
+            console.log(response.data);
         })
         .catch((e) => {
           console.log(e);
-          alert("Erro: Tente novamente mais tarde.");
+
         });
     },
   },
