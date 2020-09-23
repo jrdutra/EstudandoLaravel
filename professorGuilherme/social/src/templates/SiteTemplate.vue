@@ -12,7 +12,7 @@
           <router-link to="/cadastro">Cadastro</router-link>
         </li>
         <li v-if="usuario">
-          <router-link to="/cadastro">{{ usuario.name }}</router-link>
+          <router-link to="/perfil">{{ usuario.name }}</router-link>
         </li>
         <li v-if="usuario">
           <a v-on:click="sair()">Sair</a>
