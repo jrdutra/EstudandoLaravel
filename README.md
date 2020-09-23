@@ -98,6 +98,12 @@ Fonte: [https://stackoverrun.com/ru/q/10354933 ](https://stackoverrun.com/ru/q/1
 
 php artisan migrate:refresh
 
+**Criar nova migração para uma tabela já existente**
+
+(Utilizado para adicionar um novo campo em uma tabela por exemplo)
+
+php artisan make:migration add_imagem_table_users --table=users
+
 **Criar link com a pasta Storage:**
 
 php artisan storage:link

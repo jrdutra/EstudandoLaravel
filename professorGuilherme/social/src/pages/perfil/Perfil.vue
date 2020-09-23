@@ -23,7 +23,11 @@
       </div>
 
       <input type="password" placeholder="Senha" v-model="password" />
-      <input type="password" placeholder="Repetir Senha" v-model="password_confirmation" />
+      <input
+        type="password"
+        placeholder="Repetir Senha"
+        v-model="password_confirmation"
+      />
       <button class="btn" v-on:click="perfil()">Atualizar</button>
     </span>
   </site-template>
@@ -46,9 +50,9 @@ export default {
       password_confirmation: "",
     };
   },
-  created(){
-    let usuarioAux = sessionStorage.getItem('usuario');
-    if(usuarioAux){
+  created() {
+    let usuarioAux = sessionStorage.getItem("usuario");
+    if (usuarioAux) {
       this.usuario = JSON.parse(usuarioAux);
       this.name = this.usuario.name;
       this.email = this.usuario.email;
@@ -57,23 +61,41 @@ export default {
   methods: {
     perfil() {
       axios
-        .put("http://127.0.0.1:8000/api/perfil", {
-          name: this.name,
-          email: this.email,
-          password: this.password,
-          password_confirmation: this.password_confirmation,
-        },
-        {"headers":
+        .put(
+          "http://127.0.0.1:8000/api/perfil",
           {
-          "authorization": "Bearer " + this.usuario.token
+            name: this.name,
+            email: this.email,
+            password: this.password,
+            password_confirmation: this.password_confirmation,
+          },
+          {
+            headers: {
+              authorization: "Bearer " + this.usuario.token,
+            },
           }
-        })
+        )
         .then((response) => {
+          if (response.data.token) {
+            //login com sucesso
             console.log(response.data);
+            sessionStorage.setItem('usuario',  JSON.stringify(response.data));
+            alert("Perfil atualizado");
+          }else {
+
+            //erros de validacao
+            console.log("erros de validacao");
+
+            let erros = "";
+
+            for (let erro of Object.values(response.data)) {
+              erros += erro + " ";
+            }
+            alert(erros);
+          }
         })
         .catch((e) => {
           console.log(e);
-
         });
     },
   },
