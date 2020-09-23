@@ -21,14 +21,18 @@ Route::post('/cadastro', function (Request $request) {
         return $validacao->errors();
     }
 
+    $imagem = "/perfis/padrao.jpg";
+
+
     $user = User::create(
         [
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'imagem' => $imagem
         ]
     );
-
+    $user->imagem = asset($user->imagem);
     $user->token = $user->createToken($user->email)->accessToken;
 
     return $user;
@@ -51,6 +55,7 @@ Route::post('/login', function (Request $request) {
     if (Auth::attempt(['email' => $data['email'], 'password' =>  $data['password']])) {
         $user = auth()->user();
         $user->token = $user->createToken($user->email)->accessToken;
+        $user->imagem = asset($user->imagem);
         return $user;
     } else {
         return ['status' => false];
@@ -129,7 +134,6 @@ Route::middleware('auth:api')->put('/perfil', function (Request $request) {
         if($valiacao->fails()){
           return $valiacao->errors();
         }
-
 
         $time = time();
         $diretorioPai = 'perfis';

@@ -3,14 +3,13 @@
     <span slot="menuesquerdo">
       <div class="row valign-wrapper">
         <grid-vue tamanho="4">
-          <img src="https://materializecss.com/images/yuna.jpg" alt class="circle responsive-img" />
+          <img :src="usuario.imagem" :alt="usuario.name" class="circle responsive-img" />
           <!-- notice the "circle" class -->
         </grid-vue>
         <grid-vue tamanho="8">
-          <h5>Maria Silva</h5>
+          <h5>{{ usuario.name }}</h5>
           <span class="black-text">
-            Descrição do perfil do usuário no sistema de teste da rede
-            social
+
           </span>
         </grid-vue>
       </div>
@@ -48,8 +47,16 @@ export default {
     GridVue
   },
   data() {
-    return {};
+    return {
+      usuario:false
+    };
   },
+  created() {
+    let usuarioAux = sessionStorage.getItem("usuario");
+    if (usuarioAux) {
+      this.usuario = JSON.parse(usuarioAux);
+    }
+  }
 };
 </script>
 
