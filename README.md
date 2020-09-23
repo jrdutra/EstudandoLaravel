@@ -92,33 +92,58 @@ Fonte: [https://stackoverrun.com/ru/q/10354933 ](https://stackoverrun.com/ru/q/1
 
 **Para criar base:**
 
- php artisan migrate
+```
+php artisan migrate
+```
 
 **Para atualizar base:**
 
+```
 php artisan migrate:refresh
+```
 
 **Criar nova migração para uma tabela já existente**
 
 (Utilizado para adicionar um novo campo em uma tabela por exemplo)
 
+```
 php artisan make:migration add_imagem_table_users --table=users
+```
+
+**Criar um Controller**
+
+```
+php artisan make:controller UsuarioController
+```
 
 **Criar link com a pasta Storage:**
 
+```
 php artisan storage:link
+```
+
 
 **Limpar Cache:**
 
+```
 sudo php artisan config:cache
+```
 
 **Instalar Intervention/Image:**
 
+```
 composer require intervention/image
+```
 
+**Outros**
+
+```
 php --version
+```
 
+```
 sudo apt-get install php7.2-gd
+```
 
 ## Compatibilidades de Pacotes
 
