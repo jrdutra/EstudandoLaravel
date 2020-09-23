@@ -3,7 +3,7 @@
     <span slot="menuesquerdo">
       <img
         class="responsive-img"
-        src="https://www.frenet.com.br/blog/wp-content/uploads/2019/01/social-selling-como-aumentar-as-vendas-com-as-redes-sociais.png"
+        :src="usuario.imagem"
         alt
       />
     </span>
@@ -15,7 +15,7 @@
       <div class="file-field input-field">
         <div class="btn">
           <span>Imagem</span>
-          <input type="file" />
+          <input type="file" v-on:change="salvaImagem"/>
         </div>
         <div class="file-path-wrapper">
           <input class="file-path validate" type="text" />
@@ -48,6 +48,7 @@ export default {
       email: "",
       password: "",
       password_confirmation: "",
+      imagem:''
     };
   },
   created() {
@@ -59,6 +60,18 @@ export default {
     }
   },
   methods: {
+    salvaImagem(e){
+      let file = e.target.files[0] || e.dataTransfer.files[0];
+      let reader = new FileReader();
+
+      reader.onloadend = () => {
+        this.imagem = reader.result;
+      };
+
+      reader.readAsDataURL(file);
+
+
+    },
     perfil() {
       axios
         .put(
@@ -66,6 +79,7 @@ export default {
           {
             name: this.name,
             email: this.email,
+            imagem: this.imagem,
             password: this.password,
             password_confirmation: this.password_confirmation,
           },
@@ -79,7 +93,8 @@ export default {
           if (response.data.token) {
             //login com sucesso
             console.log(response.data);
-            sessionStorage.setItem('usuario',  JSON.stringify(response.data));
+            this.usuario = response.data;
+            sessionStorage.setItem('usuario',  JSON.stringify(this.usuario));
             alert("Perfil atualizado");
           }else {
 
