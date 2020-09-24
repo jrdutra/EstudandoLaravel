@@ -157,6 +157,12 @@ composer create-project --prefer-dist laravel/laravel webservice "5.7.15"
 composer require laravel/passport  "7.5.1"
 ```
 
+Depois de rodar o comando anterior, lembrar de instalar o passport com o seguinte comando:
+
+```
+php artisan passport:install --force
+```
+
 # VUE.js
 
 ## Comandos importantes
