@@ -33,11 +33,11 @@ php -r "if (hash_file('SHA384', 'composer-setup.php') === '$HASH') { echo 'Insta
 
 **Instalado o composer de fato:**
 
-sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+```sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer```
 
 **Verificando:**
 
-composer
+```composer```
 
 *Resultado:* Deve aparecer o logo do composer desenhado em barras no terminal
 
@@ -45,11 +45,11 @@ composer
 
 **Iniciar o projeto Laravel:**
 
-composer create-project laravel/laravel aprendendo-laravel --prefer-dist
+```composer create-project laravel/laravel aprendendo-laravel --prefer-dist```
 
 **Startar o projeto Laravel:**
 
-sudo php artisan serve --host=localhost --port=82
+```sudo php artisan serve --host=localhost --port=82```
 
 
 ## Possíveis Erros:
@@ -60,21 +60,26 @@ failed to open stream: No such file or directory in...
 
 **Tentar**
 
-php artisan config:cache 
+```php artisan config:cache```
 
-php artisan config:clear 
+```php artisan config:clear ```
 
-composer dump-autoload -o
+```composer dump-autoload -o```
 
 **OU**
 
-Deletar a pasta *vendor* e o arquivo *composer.lock* e rodar o comando *composer install*
+Deletar a pasta *vendor* e o arquivo *composer.lock* e rodar o comando:
+
+```composer install```
 
 **Para erro de CORS ORIGIN:**
 
-Corre php artisan make:middleware ModifyHeadersMiddleware
+Rode:
+
+```php artisan make:middleware ModifyHeadersMiddleware```
 
 Abra o arquivo **ModifyHeadersMiddleware** e altere o método handle():
+
 
 ```
 public function handle($request, Closure $next) 
@@ -86,6 +91,7 @@ public function handle($request, Closure $next)
     return $response; 
 } 
 ```
+
 Abra app / Http / Kernel.php e adicione a classe ModifyHeadersMiddlewar e na matriz .protected $middleware
 
 Fonte: [https://stackoverrun.com/ru/q/10354933](https://stackoverrun.com/ru/q/10354933)
