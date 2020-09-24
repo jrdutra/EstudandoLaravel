@@ -31,7 +31,7 @@ class UsuarioController extends Controller
         if (Auth::attempt(['email' => $data['email'], 'password' =>  $data['password']])) {
             
             $user = auth()->user();
-            
+            error_log("Aqui4");
             $user->token = $user->createToken($user->email)->accessToken;
             error_log("Aqui5");
             $user->imagem = asset($user->imagem);

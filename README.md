@@ -86,7 +86,21 @@ public function handle($request, Closure $next)
 ```
 Abra app / Http / Kernel.php e adicione a classe ModifyHeadersMiddlewar e na matriz .protected $middleware
 
-Fonte: [https://stackoverrun.com/ru/q/10354933 ](https://stackoverrun.com/ru/q/10354933 )
+Fonte: [https://stackoverrun.com/ru/q/10354933](https://stackoverrun.com/ru/q/10354933)
+
+**Para o erro: No application encryption key has been specified.**
+
+Rodar o seguinte ocmando para gerar a chave:
+
+```php artisan key:generate```
+
+Rodar os seguintes comandos para limpar o cache:
+
+```php artisan config:clear```
+
+```php artisan config:cache```
+
+Fonte: [stackoverflow.com](https://stackoverflow.com/questions/52985757/error-no-application-encryption-key-has-been-specified-but-it-exist)
 
 ## Comandos úteis Laravel:
 
