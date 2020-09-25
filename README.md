@@ -205,7 +205,7 @@ php --version
 sudo apt-get install php7.2-gd
 ```
 
-## Compatibilidades de Pacotes
+## Instalando os pacotes compatíveis
 
 **Laravel com Passport e corretor de CrossOrigin**
 
