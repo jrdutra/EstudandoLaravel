@@ -15,7 +15,7 @@
       </div>
     </span>
     <span slot="principal">
-      <publicar-conteudo-vue :usuario="usuario"></publicar-conteudo-vue>
+      <publicar-conteudo-vue></publicar-conteudo-vue>
       <card-conteudo-vue
         perfil="https://materializecss.com/images/yuna.jpg"
         nome="Maria Silva"
@@ -52,9 +52,9 @@ export default {
     };
   },
   created() {
-    let usuarioAux = sessionStorage.getItem("usuario");
+    let usuarioAux = this.$store.getters.getUsuario;
     if (usuarioAux) {
-      this.usuario = JSON.parse(usuarioAux);
+      this.usuario = this.$store.getters.getUsuario;
     }
   }
 };

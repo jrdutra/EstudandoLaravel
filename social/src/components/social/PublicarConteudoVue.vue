@@ -39,7 +39,7 @@
 import GridVue from "@/components/layouts/GridVue";
 export default {
   name: "PublicarConteudoVue",
-  props: ['usuario'],
+  props: [],
   components: {
     GridVue,
   },
@@ -60,7 +60,7 @@ export default {
         },
           {
             headers: {
-              authorization: "Bearer " + this.usuario.token,
+              authorization: "Bearer " + this.$store.getters.getToken,
           },
         }
       ).then(response => {
