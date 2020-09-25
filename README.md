@@ -113,7 +113,7 @@ php artisan make:middleware ModifyHeadersMiddleware
 Abra o arquivo **ModifyHeadersMiddleware** e altere o método handle():
 
 
-```
+```php
 public function handle($request, Closure $next) 
 { 
     $response = $next($request); 
@@ -217,15 +217,6 @@ composer create-project --prefer-dist laravel/laravel webservice "5.7.15"
 composer require laravel/passport  "7.5.1"
 ```
 
-**Para o corretor de crossorigin**, de acordo com as versões apresentadas acima, instalar da seguinte forma:
-
-1. Comando de instalação:
-
-```
-composer require barryvdh/laravel-cors "^0.11.0"
-
-```
-
 Depois de rodar o comando anterior, lembrar de instalar o passport com o seguinte comando:
 
 ```
@@ -240,6 +231,18 @@ php artisan passport:install --force
 composer require barryvdh/laravel-cors "^0.11.0"
 
 ```
+
+2. ir no arquivo /app/Http/Kernel.php e procurar por 'api' e modificar da segunte forma:
+
+```php
+	'api' => [
+            'throttle:60,1',
+            'bindings',
+            \Barryvdh\Cors\HandleCors::class
+        ],
+```
+
+incluindo a linha `\Barryvdh\Cors\HandleCors::class`.
 
 
 # VUE.js
