@@ -35,7 +35,7 @@
 
 <script>
 import SiteTemplate from "@/templates/SiteTemplate";
-import axios from "axios";
+
 export default {
   name: "Perfil",
   components: {
@@ -73,9 +73,9 @@ export default {
 
     },
     perfil() {
-      axios
+      this.$http
         .put(
-          "http://127.0.0.1:8000/api/perfil",
+          this.$urlApi+"perfil",
           {
             name: this.name,
             email: this.email,
