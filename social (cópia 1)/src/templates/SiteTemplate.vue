@@ -2,7 +2,9 @@
   <span>
     <header>
       <nav-bar cor="green darken-1" logo="Social" url="/">
-
+        <li>
+          <router-link to="/">Home</router-link>
+        </li>
         <li v-if="!usuario">
           <router-link to="/login">Entrar</router-link>
         </li>
@@ -10,7 +12,7 @@
           <router-link to="/cadastro">Cadastro</router-link>
         </li>
         <li v-if="usuario">
-          <router-link to="/cadastro">{{ usuario.name }}</router-link>
+          <router-link to="/perfil">{{ usuario.name }}</router-link>
         </li>
         <li v-if="usuario">
           <a v-on:click="sair()">Sair</a>
@@ -20,12 +22,20 @@
     <main>
       <div class="container">
         <div class="row">
-          <grid-vue tamanho="8">
+          <grid-vue tamanho="4">
             <card-menu-vue>
               <slot name="menuesquerdo"></slot>
             </card-menu-vue>
+            <card-menu-vue>
+              <h4>Amigos</h4>
+              <li>Murilo</li>
+              <li>Gustavo</li>
+              <li>Reges</li>
+              <li>Amauri</li>
+              <li>Raphael</li>
+            </card-menu-vue>
           </grid-vue>
-          <grid-vue tamanho="4">
+          <grid-vue tamanho="8">
             <slot name="principal"></slot>
           </grid-vue>
         </div>
@@ -55,7 +65,7 @@ import GridVue from "@/components/layouts/GridVue";
 import CardMenuVue from "@/components/layouts/CardMenuVue";
 
 export default {
-  name: "LoginTemplate",
+  name: "SiteTemplate",
   data(){
     return {
       usuario: false
@@ -67,18 +77,20 @@ export default {
     GridVue,
     CardMenuVue,
   },
-  created(){
-    let usuarioAux = this.$store.getters.getUsuario
+    created(){
+    let usuarioAux = sessionStorage.getItem('usuario');
     if(usuarioAux){
-      this.usuario = this.$store.getters.getUsuario
-      this.$router.push('/');
+      this.usuario = JSON.parse(usuarioAux);
+
+    }else{
+      this.$router.push('/login');
     }
   },
   methods:{
     sair(){
-      this.$store.commit('setUsuario', null);
       sessionStorage.clear();
       this.usuario = false;
+      this.$router.push('/login');
     }
   }
 };

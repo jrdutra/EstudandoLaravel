@@ -8,59 +8,59 @@
       />
     </span>
     <span slot="principal">
-      <h4>Cadastro</h4>
-      <input type="text" placeholder="Nome" v-model="name" />
+      <h4>Login</h4>
       <input type="text" placeholder="E-mail" v-model="email" />
       <input type="password" placeholder="Senha" v-model="password" />
-      <input type="password" placeholder="Repetir Senha" v-model="password_confirmation" />
-      <button class="btn" v-on:click="cadastro()">Enviar</button>
-      <router-link to="/login" class="btn red">Já tenho conta</router-link>
+      <button class="btn" v-on:click="login()">Entrar</button>
+      <router-link to="/cadastro" class="btn orange">Cadastrar</router-link>
     </span>
   </login-template>
 </template>
 
 <script>
 import LoginTemplate from "@/templates/LoginTemplate";
+
+
 export default {
-  name: "Cadastro",
+  name: "Login",
   components: {
     LoginTemplate,
   },
   data() {
     return {
-      name:'',
+
       email:'',
-      password:'',
-      password_confirmation:''
+      password:''
+
     };
   },
-    methods:{
-    cadastro(){
-      this.$http.post(this.$urlApi+'cadastro', {
-        name: this.name,
+  methods:{
+    login(){
+      this.$http.post(this.$urlApi+'login', {
         email: this.email,
-        password: this.password,
-        password_confirmation: this.password_confirmation
+        password: this.password
       })
       .then(response=>{
         if(response.data.status){
           //login com sucesso
-          this.$store.commit('setUsuario', response.data.usuario);
+          console.log("login com sucesso");
           sessionStorage.setItem('usuario',  JSON.stringify(response.data.usuario));
           this.$router.push('/');
         }else if (response.data.status == false && response.data.validacao){
           //erros de validacao
           console.log("erros de validacao");
+
           let erros = '';
+
           for(let erro of Object.values(response.data.erros)){
             erros += erro + " ";
           }
           alert(erros);
 
-
         }else{
           //login nao existe
-          alert("Erro ao cadastrar")
+          console.log("login nao existe");
+          alert("Login inválido")
         }
       })
       .catch(e=>{
