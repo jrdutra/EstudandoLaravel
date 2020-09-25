@@ -232,7 +232,7 @@ composer require barryvdh/laravel-cors "^0.11.0"
 
 ```
 
-2. ir no arquivo /app/Http/Kernel.php e procurar por 'api' e modificar da segunte forma:
+2. Ir no arquivo /app/Http/Kernel.php e procurar por 'api' e modificar da segunte forma:
 
 ```php
 	'api' => [
@@ -244,6 +244,27 @@ composer require barryvdh/laravel-cors "^0.11.0"
 
 incluindo a linha `\Barryvdh\Cors\HandleCors::class`.
 
+3. Preciso agora publicar o arquivo de configuração rodando o seguinte comando:
+
+```
+php artisan vendor:publish --provider="Barryvdh\Cors\ServiceProvider"
+```
+
+4. Ir na pasta config e abrir o arquivo cors.php, modifica-lo da seguinte forma:
+
+```php
+<?php
+
+return [
+    'supportsCredentials' => false,
+    'allowedOrigins' => ['*'],
+    'allowedOriginsPatterns' => ['*'],
+    'allowedHeaders' => ['*'],
+    'allowedMethods' => ['*'],
+    'exposedHeaders' => [],
+    'maxAge' => 0,
+];
+```
 
 # VUE.js
 
