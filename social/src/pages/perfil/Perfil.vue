@@ -90,20 +90,17 @@ export default {
           }
         )
         .then((response) => {
-          if (response.data.token) {
+          if (response.data.status) {
             //login com sucesso
             console.log(response.data);
-            this.usuario = response.data;
+            this.usuario = response.data.usuario;
             sessionStorage.setItem('usuario',  JSON.stringify(this.usuario));
             alert("Perfil atualizado");
-          }else {
-
+          }else if(response.data.status == false && response.data.validacao){
             //erros de validacao
-            console.log("erros de validacao");
-
+            //console.log("erros de validacao");
             let erros = "";
-
-            for (let erro of Object.values(response.data)) {
+            for (let erro of Object.values(response.data.erros)) {
               erros += erro + " ";
             }
             alert(erros);

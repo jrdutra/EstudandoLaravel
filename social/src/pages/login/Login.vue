@@ -41,25 +41,26 @@ export default {
         password: this.password
       })
       .then(response=>{
-        if(response.data.token){
+        if(response.data.status){
           //login com sucesso
           console.log("login com sucesso");
-          sessionStorage.setItem('usuario',  JSON.stringify(response.data));
+          sessionStorage.setItem('usuario',  JSON.stringify(response.data.usuario));
           this.$router.push('/');
-        }else if (response.data.status == false){
-          //login nao existe
-          console.log("login nao existe");
-          alert("Login inválido")
-        }else{
+        }else if (response.data.status == false && response.data.validacao){
           //erros de validacao
           console.log("erros de validacao");
 
           let erros = '';
 
-          for(let erro of Object.values(response.data)){
+          for(let erro of Object.values(response.data.erros)){
             erros += erro + " ";
           }
           alert(erros);
+
+        }else{
+          //login nao existe
+          console.log("login nao existe");
+          alert("Login inválido")
         }
       })
       .catch(e=>{

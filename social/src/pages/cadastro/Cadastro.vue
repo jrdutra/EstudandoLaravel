@@ -43,21 +43,23 @@ export default {
         password_confirmation: this.password_confirmation
       })
       .then(response=>{
-        if(response.data.token){
+        if(response.data.status){
           //login com sucesso
-          sessionStorage.setItem('usuario',  JSON.stringify(response.data));
+          sessionStorage.setItem('usuario',  JSON.stringify(response.data.usuario));
           this.$router.push('/');
-        }else if (response.data.status == false){
-          //login nao existe
-          alert("Erro ao cadastrar")
-        }else{
+        }else if (response.data.status == false && response.data.validacao){
           //erros de validacao
           console.log("erros de validacao");
           let erros = '';
-          for(let erro of Object.values(response.data)){
+          for(let erro of Object.values(response.data.erros)){
             erros += erro + " ";
           }
           alert(erros);
+
+
+        }else{
+          //login nao existe
+          alert("Erro ao cadastrar")
         }
       })
       .catch(e=>{
