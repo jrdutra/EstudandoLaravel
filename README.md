@@ -4,23 +4,37 @@
 
 ## Configurações de diretórios iniciais:
 
-```sudo apt update```
+```
+sudo apt update
+```
 
-```sudo apt install wget php-cli php-zip php-mbstring php-xml unzip```
+```
+sudo apt install wget php-cli php-zip php-mbstring php-xml unzip
+```
 
-```mkdir ~/Programas```
+```
+mkdir ~/Programas
+```
 
-```mkdir ~/Programas/composer```
+```
+mkdir ~/Programas/composer
+```
 
-```cd ~/Programas/composer```
+```
+cd ~/Programas/composer
+```
 
 ## Composer:
 
-```php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"```
+```
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+```
 
 **Pegando o hash do pacote baixado:**
 
-```HASH="$(wget -q -O - https://composer.github.io/installer.sig)"```
+```
+HASH="$(wget -q -O - https://composer.github.io/installer.sig)"
+```
 
 **Verificando o hash:**
 
@@ -33,11 +47,15 @@ php -r "if (hash_file('SHA384', 'composer-setup.php') === '$HASH') { echo 'Insta
 
 **Instalado o composer de fato:**
 
-```sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer```
+```
+sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+```
 
 **Verificando:**
 
-```composer```
+```
+composer
+```
 
 *Resultado:* Deve aparecer o logo do composer desenhado em barras no terminal
 
@@ -45,11 +63,15 @@ php -r "if (hash_file('SHA384', 'composer-setup.php') === '$HASH') { echo 'Insta
 
 **Iniciar o projeto Laravel:**
 
-```composer create-project laravel/laravel aprendendo-laravel --prefer-dist```
+```
+composer create-project laravel/laravel aprendendo-laravel --prefer-dist
+```
 
 **Startar o projeto Laravel:**
 
-```sudo php artisan serve --host=localhost --port=82```
+```
+sudo php artisan serve --host=localhost --port=82
+```
 
 
 ## Possíveis Erros:
@@ -60,23 +82,33 @@ failed to open stream: No such file or directory in...
 
 **Tentar**
 
-```php artisan config:cache```
+```
+php artisan config:cache
+```
 
-```php artisan config:clear ```
+```
+php artisan config:clear
+```
 
-```composer dump-autoload -o```
+```
+composer dump-autoload -o
+```
 
 **OU**
 
 Deletar a pasta *vendor* e o arquivo *composer.lock* e rodar o comando:
 
-```composer install```
+```
+composer install
+```
 
 **Para erro de CORS ORIGIN:**
 
 Rode:
 
-```php artisan make:middleware ModifyHeadersMiddleware```
+```
+php artisan make:middleware ModifyHeadersMiddleware
+```
 
 Abra o arquivo **ModifyHeadersMiddleware** e altere o método handle():
 
@@ -100,13 +132,19 @@ Fonte: [https://stackoverrun.com/ru/q/10354933](https://stackoverrun.com/ru/q/10
 
 Rodar o seguinte ocmando para gerar a chave:
 
-```php artisan key:generate```
+```
+php artisan key:generate
+```
 
 Rodar os seguintes comandos para limpar o cache:
 
-```php artisan config:clear```
+```
+php artisan config:clear
+```
 
-```php artisan config:cache```
+```
+php artisan config:cache
+```
 
 Fonte: [stackoverflow.com](https://stackoverflow.com/questions/52985757/error-no-application-encryption-key-has-been-specified-but-it-exist)
 
@@ -169,7 +207,7 @@ sudo apt-get install php7.2-gd
 
 ## Compatibilidades de Pacotes
 
-**Laravel com Passport**
+**Laravel com Passport e corretor de CrossOrigin**
 
 ```
 composer create-project --prefer-dist laravel/laravel webservice "5.7.15"
@@ -179,11 +217,30 @@ composer create-project --prefer-dist laravel/laravel webservice "5.7.15"
 composer require laravel/passport  "7.5.1"
 ```
 
+**Para o corretor de crossorigin**, de acordo com as versões apresentadas acima, instalar da seguinte forma:
+
+1. Comando de instalação:
+
+```
+composer require barryvdh/laravel-cors "^0.11.0"
+
+```
+
 Depois de rodar o comando anterior, lembrar de instalar o passport com o seguinte comando:
 
 ```
 php artisan passport:install --force
 ```
+
+**Para o corretor de crossorigin**, de acordo com as versões apresentadas acima, instalar da seguinte forma:
+
+1. Comando de instalação:
+
+```
+composer require barryvdh/laravel-cors "^0.11.0"
+
+```
+
 
 # VUE.js
 
