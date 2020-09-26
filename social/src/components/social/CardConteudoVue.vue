@@ -24,7 +24,7 @@
             >{{ totalCurtidas }}
           </a>
           <a @click="abreComentarios()" style="cursor: pointer">
-            <i class="material-icons">insert_comment</i> {{ comentariosProp.length }}
+            <i class="material-icons">insert_comment</i> {{ listaComentarios.length }}
           </a>
         </p>
         <p v-if="exibirComentario" class="right-align">
@@ -69,7 +69,8 @@ export default {
       totalCurtidas: this.totalCurtidasProp,
       comentarios: this.comentariosProp,
       exibirComentario: false,
-      textoComentario:''
+      textoComentario:'',
+      listaComentarios: this.comentariosProp || []
     };
   },
   methods: {
