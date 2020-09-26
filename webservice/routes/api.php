@@ -15,6 +15,7 @@ Route::middleware('auth:api')->put('/perfil', "UsuarioController@perfil");
 Route::middleware('auth:api')->post('/conteudo/adicionar', "ConteudoController@adicionar");
 Route::middleware('auth:api')->get('/conteudo/lista', "ConteudoController@lista");
 Route::middleware('auth:api')->put('/conteudo/curtir/{id}', "ConteudoController@curtir");
+Route::middleware('auth:api')->put('/conteudo/comentar/{id}', "ConteudoController@comentar");
 
 Route::get('/testes', function(){
     $user = User::find(1);
@@ -57,8 +58,8 @@ Route::get('/testes', function(){
     return $conteudo->curtidas;*/
 
     //Novo comentario
-    /*
-    $conteudo = Conteudo::find(1);
+
+    $conteudo = Conteudo::find(7);
     $user->comentarios()->create([
         'conteudo_id'=> $conteudo->id,
         'texto'=> 'Comentario 1',
@@ -67,7 +68,7 @@ Route::get('/testes', function(){
     $user2->comentarios()->create([
         'conteudo_id'=> $conteudo->id,
         'texto'=> 'Comentario 2',
-        'data'=> date('Y-m-d')
+        'data'=> date('Y-m-d H:i:s')
     ]);
-    return $conteudo->comentarios;*/
+    return $conteudo->comentarios;
 });

@@ -26,4 +26,9 @@ class Conteudo extends Model
     public function curtidas(){
         return $this->belongsToMany('App\User', 'curtidas', 'conteudo_id', 'user_id');
     }
+
+    public function getDataAttribute($value){
+        $data = date('H:i d/m/Y', strtotime($value));
+        return str_replace(':', 'h', $data);
+    }
 }

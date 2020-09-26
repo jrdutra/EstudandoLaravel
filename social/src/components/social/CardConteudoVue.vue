@@ -23,8 +23,24 @@
             <i class="material-icons">{{ curtiu }}</i
             >{{ totalCurtidas }}
           </a>
-
-          <i class="material-icons">insert_comment</i>
+          <a @click="abreComentarios()" style="cursor: pointer">
+            <i class="material-icons">insert_comment</i> {{ comentariosProp.length }}
+          </a>
+        </p>
+        <p v-if="exibirComentario" class="right-align">
+          <input type="text" v-model="textoComentario" placeholder="Comentar">
+          <button @click="comentar(id)" v-if="textoComentario" class="btn waves-effect waves-light orange"><i class="material-icons">send</i></button>
+        </p>
+        <p v-if="exibirComentario">
+          <ul class="collection">
+            <li class="collection-item avatar" v-for="item in comentariosProp" :key="item.id">
+              <img :src="item.user.imagem" alt="" class="circle">
+              <span class="title">{{ item.user.name }} <small>- {{ item.data }}</small> </span>
+              <p>
+                {{ item.texto }}
+              </p>
+            </li>
+          </ul>
         </p>
       </div>
     </div>
@@ -35,14 +51,25 @@
 import GridVue from "@/components/layouts/GridVue";
 export default {
   name: "CardConteudoVue",
-  props: ["id", "perfil", "nome", "data", "totalCurtidas", "curtiuConteudo"],
+  props: [
+    "id",
+    "perfil",
+    "nome",
+    "data",
+    "totalCurtidasProp",
+    "comentariosProp",
+    "curtiuConteudo",
+  ],
   components: {
     GridVue,
   },
   data() {
     return {
       curtiu: this.curtiuConteudo ? "favorite" : "favorite_border",
-      totalCurtidas: this.totalCurtidas,
+      totalCurtidas: this.totalCurtidasProp,
+      //comentarios: this.comentariosProp,
+      exibirComentario: false,
+      textoComentario:''
     };
   },
   methods: {
@@ -60,7 +87,10 @@ export default {
         .then((response) => {
           if (response.status) {
             this.totalCurtidas = response.data.curtidas;
-            this.$store.commit('setConteudosLinhaTempo', response.data.lista.conteudos.data);
+            this.$store.commit(
+              "setConteudosLinhaTempo",
+              response.data.lista.conteudos.data
+            );
             if (this.curtiu == "favorite_border") {
               this.curtiu = "favorite";
             } else {
@@ -71,6 +101,43 @@ export default {
           }
         })
         .catch((e) => {
+          alert("Erro, tente novamente mais tarde");
+        });
+    },
+    abreComentarios() {
+      console.log(this.comentarios);
+      this.exibirComentario = !this.exibirComentario;
+    },
+    comentar(id) {
+      if(!this.textoComentario){
+        return;
+      }
+      this.$http
+        .put(
+          this.$urlApi + "conteudo/comentar/" + id,
+          {texto: this.textoComentario},
+          {
+            headers: {
+              authorization: "Bearer " + this.$store.getters.getToken,
+            },
+          }
+        )
+        .then((response) => {
+          if (response.status) {
+            this.textoComentario = "";
+            console.log("Retorno do comentario");
+            console.log(response);
+            this.$store.commit(
+              "setConteudosLinhaTempo",
+              response.data.lista.conteudos.data
+            );
+
+          } else {
+            alert(response.data.erro);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
           alert("Erro, tente novamente mais tarde");
         });
     },

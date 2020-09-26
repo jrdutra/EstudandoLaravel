@@ -20,7 +20,8 @@
 
       <card-conteudo-vue
         :id="item.id"
-        :totalCurtidas="item.total_curtidas"
+        :totalCurtidasProp="item.total_curtidas"
+        :comentariosProp="item.comentarios"
         :curtiuConteudo="item.curtiu_conteudo"
         :perfil="item.user.imagem"
         :nome="item.user.name"
