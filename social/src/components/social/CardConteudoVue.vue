@@ -67,7 +67,7 @@ export default {
     return {
       curtiu: this.curtiuConteudo ? "favorite" : "favorite_border",
       totalCurtidas: this.totalCurtidasProp,
-      //comentarios: this.comentariosProp,
+      comentarios: this.comentariosProp,
       exibirComentario: false,
       textoComentario:''
     };

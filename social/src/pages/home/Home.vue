@@ -3,19 +3,20 @@
     <span slot="menuesquerdo">
       <div class="row valign-wrapper">
         <grid-vue tamanho="4">
-          <img :src="usuario.imagem" :alt="usuario.name" class="circle responsive-img" />
+          <img
+            :src="usuario.imagem"
+            :alt="usuario.name"
+            class="circle responsive-img"
+          />
           <!-- notice the "circle" class -->
         </grid-vue>
         <grid-vue tamanho="8">
           <h5>{{ usuario.name }}</h5>
-          <span class="black-text">
-
-          </span>
+          <span class="black-text"> </span>
         </grid-vue>
       </div>
     </span>
     <span slot="principal">
-
       <publicar-conteudo-vue></publicar-conteudo-vue>
 
       <card-conteudo-vue
@@ -26,7 +27,8 @@
         :perfil="item.user.imagem"
         :nome="item.user.name"
         :data="item.data"
-        v-for="item in listaConteudos" :key="item.id"
+        v-for="item in listaConteudos"
+        :key="item.id"
       >
         <card-detalhe-vue
           :titulo="item.titulo"
@@ -35,7 +37,7 @@
           :link="item.link"
         ></card-detalhe-vue>
       </card-conteudo-vue>
-
+      <button v-if="this.urlProximaPagina" @click="carregaPaginacao()" class="btn blue">Mais...</button>
     </span>
   </site-template>
 </template>
@@ -53,11 +55,12 @@ export default {
     CardDetalheVue,
     PublicarConteudoVue,
     SiteTemplate,
-    GridVue
+    GridVue,
   },
   data() {
     return {
       usuario: false,
+      urlProximaPagina: null,
     };
   },
   created() {
@@ -67,31 +70,59 @@ export default {
 
       //Faz requisição do conteudo do feed
       this.$http
-        .get(
-          this.$urlApi+"conteudo/lista",
-          {
-            headers: {
-              authorization: "Bearer " + this.$store.getters.getToken,
-            },
-          }
-        )
+        .get(this.$urlApi + "conteudo/lista", {
+          headers: {
+            authorization: "Bearer " + this.$store.getters.getToken,
+          },
+        })
         .then((response) => {
-          console.log(response);
-          if(response.data.status){
-            this.$store.commit('setConteudosLinhaTempo', response.data.conteudos.data);
+          //console.log("Conteudos:");
+          //console.log(response);
+          if (response.data.status) {
+            this.$store.commit(
+              "setConteudosLinhaTempo",
+              response.data.conteudos.data
+            );
+            this.urlProximaPagina = response.data.conteudos.next_page_url;
           }
         })
         .catch((e) => {
           console.log(e);
         });
-
     }
   },
-  computed:{
-    listaConteudos(){
+  methods: {
+    carregaPaginacao() {
+      if (!this.urlProximaPagina) {
+        return;
+      }
+      //Faz requisição do conteudo do feed
+      this.$http
+        .get(this.urlProximaPagina, {
+          headers: {
+            authorization: "Bearer " + this.$store.getters.getToken,
+          },
+        })
+        .then((response) => {
+          //console.log(response);
+          if (response.data.status) {
+            this.$store.commit(
+              "setPaginacaoConteudosLinhaTempo",
+              response.data.conteudos.data
+            );
+            this.urlProximaPagina = response.data.conteudos.next_page_url;
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+  },
+  computed: {
+    listaConteudos() {
       return this.$store.getters.getConteudosLinhaTempo;
-    }
-  }
+    },
+  },
 };
 </script>
 
