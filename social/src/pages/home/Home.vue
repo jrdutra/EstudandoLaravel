@@ -19,6 +19,9 @@
       <publicar-conteudo-vue></publicar-conteudo-vue>
 
       <card-conteudo-vue
+        :id="item.id"
+        :totalCurtidas="item.total_curtidas"
+        :curtiuConteudo="item.curtiu_conteudo"
         :perfil="item.user.imagem"
         :nome="item.user.name"
         :data="item.data"

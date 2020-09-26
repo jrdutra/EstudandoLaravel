@@ -9,20 +9,29 @@ use App\Conteudo;
 class ConteudoController extends Controller
 {
 
-    public function lista(Request $request){
-
+    public function lista(Request $request)
+    {
         $data = $request->all();
         $user = $request->user();
 
+        $conteudos = Conteudo::with('user')->orderBy('data', 'DESC')->paginate(5);
+        $user = $request->user();
 
-
-        $conteudos = Conteudo::with('user')->orderBy('data','DESC')->paginate(5);
+        foreach($conteudos as $key => $conteudo){
+            $conteudo->total_curtidas = $conteudo->curtidas()->count();
+            $curtiu = $user->curtidas()->find($conteudo->id);
+            if($curtiu){
+                $conteudo->curtiu_conteudo = true;
+            }else{
+                $conteudo->curtiu_conteudo = false;
+            }
+        }
 
         return ['status' => true, 'conteudos' => $conteudos];
-
     }
 
-    public function adicionar(Request $request){
+    public function adicionar(Request $request)
+    {
 
         $data = $request->all();
         $user = $request->user();
@@ -35,7 +44,7 @@ class ConteudoController extends Controller
         ]);
 
         if ($validacao->fails()) {
-            return ['status' => false, "validacao"=>true, "erros"=>$validacao->errors()];
+            return ['status' => false, "validacao" => true, "erros" => $validacao->errors()];
         }
 
         $conteudo = new Conteudo;
@@ -48,11 +57,32 @@ class ConteudoController extends Controller
 
         $user->conteudos()->save($conteudo);
 
-        $conteudos = Conteudo::with('user')->orderBy('data','DESC')->paginate(5);
+        $conteudos = Conteudo::with('user')->orderBy('data', 'DESC')->paginate(5);
 
         return ['status' => true, 'conteudos' => $conteudos];
-
     }
 
+    public function curtir($id, Request $request)
+    {
 
+        $user = $request->user();
+
+        $conteudo = Conteudo::find($id);
+        if($conteudo){
+            $user->curtidas()->toggle($conteudo->id);
+
+            //return $conteudo->curtidas()->count();
+            //return $conteudo->curtidas;
+            return [
+                'status' => true,
+                'curtidas' => $conteudo->curtidas()->count(),
+                'lista' => $this->lista($request)
+            ];
+        }else{
+            return ['status' => false, 'erro' => 'Conteúo não existe'];
+        }
+
+
+
+    }
 }

@@ -19,7 +19,11 @@
       </div>
       <div class="card-action">
         <p>
-          <i class="material-icons">favorite_border</i>
+          <a @click="curtida(id)" style="cursor: pointer">
+            <i class="material-icons">{{ curtiu }}</i
+            >{{ totalCurtidas }}
+          </a>
+
           <i class="material-icons">insert_comment</i>
         </p>
       </div>
@@ -31,12 +35,45 @@
 import GridVue from "@/components/layouts/GridVue";
 export default {
   name: "CardConteudoVue",
-  props: ["perfil", "nome", "data"],
+  props: ["id", "perfil", "nome", "data", "totalCurtidas", "curtiuConteudo"],
   components: {
     GridVue,
   },
   data() {
-    return {};
+    return {
+      curtiu: this.curtiuConteudo ? "favorite" : "favorite_border",
+      totalCurtidas: this.totalCurtidas,
+    };
+  },
+  methods: {
+    curtida(id) {
+      this.$http
+        .put(
+          this.$urlApi + "conteudo/curtir/" + id,
+          {},
+          {
+            headers: {
+              authorization: "Bearer " + this.$store.getters.getToken,
+            },
+          }
+        )
+        .then((response) => {
+          if (response.status) {
+            this.totalCurtidas = response.data.curtidas;
+            this.$store.commit('setConteudosLinhaTempo', response.data.lista.conteudos.data);
+            if (this.curtiu == "favorite_border") {
+              this.curtiu = "favorite";
+            } else {
+              this.curtiu = "favorite_border";
+            }
+          } else {
+            alert(response.data.erro);
+          }
+        })
+        .catch((e) => {
+          alert("Erro, tente novamente mais tarde");
+        });
+    },
   },
 };
 </script>
