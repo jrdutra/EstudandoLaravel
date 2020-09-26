@@ -2,11 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Conteudo;
 
 class ConteudoController extends Controller
 {
+
+    public function lista(Request $request){
+
+        $data = $request->all();
+        $user = $request->user();
+
+
+
+        $conteudos = Conteudo::with('user')->orderBy('data','DESC')->paginate(5);
+
+        return ['status' => true, 'conteudos' => $conteudos];
+
+    }
+
     public function adicionar(Request $request){
 
         $data = $request->all();
@@ -14,6 +29,14 @@ class ConteudoController extends Controller
 
 
         //Validacao
+        $validacao = Validator::make($data, [
+            'titulo' => ['required'],
+            'texto' => ['required'],
+        ]);
+
+        if ($validacao->fails()) {
+            return ['status' => false, "validacao"=>true, "erros"=>$validacao->errors()];
+        }
 
         $conteudo = new Conteudo;
 
@@ -25,7 +48,11 @@ class ConteudoController extends Controller
 
         $user->conteudos()->save($conteudo);
 
-        return ['status' => true, 'conteudos' => $user->conteudos];
+        $conteudos = Conteudo::with('user')->orderBy('data','DESC')->paginate(5);
+
+        return ['status' => true, 'conteudos' => $conteudos];
 
     }
+
+
 }

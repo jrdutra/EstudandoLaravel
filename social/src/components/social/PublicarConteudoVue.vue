@@ -51,26 +51,43 @@ export default {
   methods: {
     addConteudo() {
       console.log(this.conteudo);
-      this.$http.post(
-        this.$urlApi + "conteudo/adicionar",{
-          titulo: this.conteudo.titulo,
-          texto: this.conteudo.texto,
-          link: this.conteudo.link,
-          imagem: this.conteudo.imagem,
-        },
+      this.$http
+        .post(
+          this.$urlApi + "conteudo/adicionar",
+          {
+            titulo: this.conteudo.titulo,
+            texto: this.conteudo.texto,
+            link: this.conteudo.link,
+            imagem: this.conteudo.imagem,
+          },
           {
             headers: {
               authorization: "Bearer " + this.$store.getters.getToken,
-          },
-        }
-      ).then(response => {
-        if(response.data.status){
-          console.log(response.data);
-        }
-      }).catch(e=>{
-        console.log(e);
-        alert("Erro, tente novamente mais tarde.")
-      });
+            },
+          }
+        )
+        .then((response) => {
+          if (response.data.status) {
+            console.log(response.data);
+            this.conteudo = { titulo: "", link: "", imagem: "" };
+            this.$store.commit(
+              "setConteudosLinhaTempo",
+              response.data.conteudos.data
+            );
+          } else if(response.data.status == false && response.data.validacao){
+            //erros de validacao
+            //console.log("erros de validacao");
+            let erros = "";
+            for (let erro of Object.values(response.data.erros)) {
+              erros += erro + " ";
+            }
+            alert(erros);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          alert("Erro, tente novamente mais tarde.");
+        });
     },
   },
 };

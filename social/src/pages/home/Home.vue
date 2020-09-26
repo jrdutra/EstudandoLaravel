@@ -15,18 +15,23 @@
       </div>
     </span>
     <span slot="principal">
+
       <publicar-conteudo-vue></publicar-conteudo-vue>
+
       <card-conteudo-vue
-        perfil="https://materializecss.com/images/yuna.jpg"
-        nome="Maria Silva"
-        data="13/01/2020 13:30"
+        :perfil="item.user.imagem"
+        :nome="item.user.name"
+        :data="item.data"
+        v-for="item in listaConteudos" :key="item.id"
       >
         <card-detalhe-vue
-          titulo="Meu card"
-          img="https://materializecss.com/images/sample-1.jpg"
-          txt="Conteúdo do de texto do card, escrevendo só para preencher espaço para ajustar o layout"
+          :titulo="item.titulo"
+          :img="item.imagem"
+          :txt="item.texto"
+          :link="item.link"
         ></card-detalhe-vue>
       </card-conteudo-vue>
+
     </span>
   </site-template>
 </template>
@@ -48,13 +53,39 @@ export default {
   },
   data() {
     return {
-      usuario:false
+      usuario: false,
     };
   },
   created() {
     let usuarioAux = this.$store.getters.getUsuario;
     if (usuarioAux) {
       this.usuario = this.$store.getters.getUsuario;
+
+      //Faz requisição do conteudo do feed
+      this.$http
+        .get(
+          this.$urlApi+"conteudo/lista",
+          {
+            headers: {
+              authorization: "Bearer " + this.$store.getters.getToken,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+          if(response.data.status){
+            this.$store.commit('setConteudosLinhaTempo', response.data.conteudos.data);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+
+    }
+  },
+  computed:{
+    listaConteudos(){
+      return this.$store.getters.getConteudosLinhaTempo;
     }
   }
 };

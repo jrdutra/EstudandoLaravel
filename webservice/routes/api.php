@@ -13,10 +13,20 @@ Route::post('/login', "UsuarioController@login");
 Route::middleware('auth:api')->put('/perfil', "UsuarioController@perfil");
 
 Route::middleware('auth:api')->post('/conteudo/adicionar', "ConteudoController@adicionar");
+Route::middleware('auth:api')->get('/conteudo/lista', "ConteudoController@lista");
 
 Route::get('/testes', function(){
     $user = User::find(1);
     $user2 = User::find(5);
+
+    $conteudos = COnteudo::all();
+
+    //Limpar conteudos
+    /*
+    foreach($conteudos as $key => $value){
+        $value->delete();
+    }*/
+
     //Criar conteudo
     /*
     $user->conteudos()->create([
