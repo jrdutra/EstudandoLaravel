@@ -3,7 +3,9 @@
     <span slot="menuesquerdo">
       <div class="row valign-wrapper">
         <grid-vue tamanho="4">
-          <router-link :to="'/pagina/' + usuario.id + '/' + $slug(usuario.name)">
+          <router-link
+            :to="'/pagina/' + usuario.id + '/' + $slug(usuario.name)"
+          >
             <img
               :src="usuario.imagem"
               :alt="usuario.name"
@@ -13,12 +15,21 @@
           <!-- notice the "circle" class -->
         </grid-vue>
         <grid-vue tamanho="8">
-          <router-link :to="'/pagina/' + usuario.id + '/' + $slug(usuario.name)">
+          <router-link
+            :to="'/pagina/' + usuario.id + '/' + $slug(usuario.name)"
+          >
             <h5>{{ usuario.name }}</h5>
           </router-link>
           <span class="black-text"> </span>
         </grid-vue>
       </div>
+    </span>
+    <span slot="menuesquerdoamigos">
+      <h4>Seguindo</h4>
+      <router-link v-for="item in amigos" :key="item.id" :to="'/pagina/' + item.id + '/' + $slug(item.name)">
+        <li>{{ item.name }}</li>
+      </router-link>
+      <li v-if="!amigos.length">Nenhum usuário</li>
     </span>
     <span slot="principal">
       <publicar-conteudo-vue></publicar-conteudo-vue>
@@ -68,6 +79,7 @@ export default {
       usuario: { imagem: "", name: "" },
       urlProximaPagina: null,
       pararScroll: false,
+      amigos:[]
     };
   },
   created() {
@@ -78,9 +90,7 @@ export default {
       //Faz requisição do conteudo do feed
       this.$http
         .get(this.$urlApi + "conteudo/lista", {
-          headers: {
-            authorization: "Bearer " + this.$store.getters.getToken,
-          },
+          headers: { authorization: "Bearer " + this.$store.getters.getToken },
         })
         .then((response) => {
           //console.log("Conteudos:");
@@ -91,6 +101,30 @@ export default {
               response.data.conteudos.data
             );
             this.urlProximaPagina = response.data.conteudos.next_page_url;
+
+            //-------------------
+            //REQUISICAO ENCADEADA
+            //-------------------
+
+            this.$http
+              .get(this.$urlApi + "usuario/listaAmigos", {
+                headers: {
+                  authorization: "Bearer " + this.$store.getters.getToken,
+                },
+              })
+              .then((response) => {
+                //console.log("Conteudos:");
+                //console.log(response);
+                if (response.data.status) {
+                  console.log(response.data);
+                  this.amigos = response.data.amigos;
+                }else{
+                  alert(response.data.erro);
+                }
+              })
+              .catch((e) => {
+                console.log(e);
+              });
           }
         })
         .catch((e) => {
@@ -125,7 +159,7 @@ export default {
         })
         .then((response) => {
           //console.log(response);
-          if (response.data.status) {
+          if (response.data.status && this.$route.name == "Home") {
             this.$store.commit(
               "setPaginacaoConteudosLinhaTempo",
               response.data.conteudos.data

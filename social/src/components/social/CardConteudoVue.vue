@@ -90,7 +90,7 @@ export default {
           }
         )
         .then((response) => {
-          if (response.status) {
+          if (response.data.status) {
             this.totalCurtidas = response.data.curtidas;
             this.$store.commit(
               "setConteudosLinhaTempo",

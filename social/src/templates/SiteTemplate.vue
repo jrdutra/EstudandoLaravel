@@ -27,12 +27,7 @@
               <slot name="menuesquerdo"></slot>
             </card-menu-vue>
             <card-menu-vue>
-              <h4>Amigos</h4>
-              <li>Murilo</li>
-              <li>Gustavo</li>
-              <li>Reges</li>
-              <li>Amauri</li>
-              <li>Raphael</li>
+              <slot name="menuesquerdoamigos"></slot>
             </card-menu-vue>
           </grid-vue>
           <grid-vue tamanho="8">
