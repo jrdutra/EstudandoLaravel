@@ -3,7 +3,7 @@
     <span slot="menuesquerdo">
       <div class="row valign-wrapper">
         <grid-vue tamanho="4">
-          <router-link :to="'/pagina/' + usuarioId">
+          <router-link :to="'/pagina/' + donoPagina.id  + '/' + $slug(donoPagina.name)">
             <img
               :src="donoPagina.imagem"
               :alt="donoPagina.name"
@@ -13,7 +13,7 @@
           <!-- notice the "circle" class -->
         </grid-vue>
         <grid-vue tamanho="8">
-          <router-link :to="'/pagina/' + usuarioId">
+          <router-link :to="'/pagina/' + donoPagina.id  + '/' + $slug(donoPagina.name)">
             <h5>{{ donoPagina.name }}</h5>
           </router-link>
           <span class="black-text"> </span>

@@ -3,7 +3,7 @@
     <span slot="menuesquerdo">
       <div class="row valign-wrapper">
         <grid-vue tamanho="4">
-          <router-link :to="'/pagina/' + usuario.id">
+          <router-link :to="'/pagina/' + usuario.id + '/' + $slug(usuario.name)">
             <img
               :src="usuario.imagem"
               :alt="usuario.name"
@@ -13,7 +13,7 @@
           <!-- notice the "circle" class -->
         </grid-vue>
         <grid-vue tamanho="8">
-          <router-link :to="'/pagina/' + usuario.id">
+          <router-link :to="'/pagina/' + usuario.id + '/' + $slug(usuario.name)">
             <h5>{{ usuario.name }}</h5>
           </router-link>
           <span class="black-text"> </span>
@@ -65,7 +65,7 @@ export default {
   },
   data() {
     return {
-      usuario: false,
+      usuario: { imagem: "", name: "" },
       urlProximaPagina: null,
       pararScroll: false,
     };
