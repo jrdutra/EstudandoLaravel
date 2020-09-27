@@ -4,12 +4,15 @@
       <div class="card-content">
         <div class="row valign-wrapper">
           <grid-vue tamanho="1">
+          <router-link :to="'/pagina/' + usuarioId">
             <img :src="perfil" :alt="nome" class="circle responsive-img" />
             <!-- notice the "circle" class -->
+            </router-link>
           </grid-vue>
           <grid-vue tamanho="11">
             <span class="black-text">
-              <strong>{{ nome }}</strong> -
+            <router-link :to="'/pagina/' + usuarioId">
+              <strong>{{ nome }}</strong> </router-link> -
               <small>{{ data }}</small>
             </span>
           </grid-vue>
@@ -54,6 +57,7 @@ export default {
   props: [
     "id",
     "perfil",
+    "usuarioId",
     "nome",
     "data",
     "totalCurtidasProp",
@@ -69,8 +73,8 @@ export default {
       totalCurtidas: this.totalCurtidasProp,
       comentarios: this.comentariosProp,
       exibirComentario: false,
-      textoComentario:'',
-      listaComentarios: this.comentariosProp || []
+      textoComentario: "",
+      listaComentarios: this.comentariosProp || [],
     };
   },
   methods: {
@@ -110,13 +114,13 @@ export default {
       this.exibirComentario = !this.exibirComentario;
     },
     comentar(id) {
-      if(!this.textoComentario){
+      if (!this.textoComentario) {
         return;
       }
       this.$http
         .put(
           this.$urlApi + "conteudo/comentar/" + id,
-          {texto: this.textoComentario},
+          { texto: this.textoComentario },
           {
             headers: {
               authorization: "Bearer " + this.$store.getters.getToken,
@@ -132,7 +136,6 @@ export default {
               "setConteudosLinhaTempo",
               response.data.lista.conteudos.data
             );
-
           } else {
             alert(response.data.erro);
           }

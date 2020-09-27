@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "axios": "^0.20.0",
+    "slug": "^0.9.1",
     "vue": "^2.5.2",
     "vue-cli": "^2.9.6",
     "vue-router": "^3.0.1",

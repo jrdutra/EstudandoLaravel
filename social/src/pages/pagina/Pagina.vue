@@ -3,18 +3,18 @@
     <span slot="menuesquerdo">
       <div class="row valign-wrapper">
         <grid-vue tamanho="4">
-          <router-link :to="'/pagina/' + usuario.id">
+          <router-link :to="'/pagina/' + usuarioId">
             <img
-              :src="usuario.imagem"
-              :alt="usuario.name"
+              :src="donoPagina.imagem"
+              :alt="donoPagina.name"
               class="circle responsive-img"
             />
           </router-link>
           <!-- notice the "circle" class -->
         </grid-vue>
         <grid-vue tamanho="8">
-          <router-link :to="'/pagina/' + usuario.id">
-            <h5>{{ usuario.name }}</h5>
+          <router-link :to="'/pagina/' + usuarioId">
+            <h5>{{ donoPagina.name }}</h5>
           </router-link>
           <span class="black-text"> </span>
         </grid-vue>
@@ -55,7 +55,7 @@ import CardDetalheVue from "@/components/social/CardDetalheVue";
 import PublicarConteudoVue from "@/components/social/PublicarConteudoVue";
 import GridVue from "@/components/layouts/GridVue";
 export default {
-  name: "Home",
+  name: "Pagina",
   components: {
     CardConteudoVue,
     CardDetalheVue,
@@ -68,6 +68,7 @@ export default {
       usuario: false,
       urlProximaPagina: null,
       pararScroll: false,
+      donoPagina: { imagem: "", name: "" },
     };
   },
   created() {
@@ -77,7 +78,7 @@ export default {
 
       //Faz requisição do conteudo do feed
       this.$http
-        .get(this.$urlApi + "conteudo/lista", {
+        .get(this.$urlApi + "conteudo/pagina/lista/" + this.$route.params.id, {
           headers: {
             authorization: "Bearer " + this.$store.getters.getToken,
           },
@@ -91,6 +92,7 @@ export default {
               response.data.conteudos.data
             );
             this.urlProximaPagina = response.data.conteudos.next_page_url;
+            this.donoPagina = response.data.dono;
           }
         })
         .catch((e) => {
