@@ -13,11 +13,11 @@ sudo apt install wget php-cli php-zip php-mbstring php-xml unzip
 ```
 
 ```
-mkdir ~/Programas
+mkdir ~/Programas 
 ```
 
 ```
-mkdir ~/Programas/composer
+mkdir ~/Programas/composer 
 ```
 
 ```
@@ -270,7 +270,7 @@ return [
 
 ## Comandos importantes
 
-**Rodar o projeto**
+**Rodar o projeto** 
 
 Dentro da pasta do projeto, executar o seguinte comando:
 
