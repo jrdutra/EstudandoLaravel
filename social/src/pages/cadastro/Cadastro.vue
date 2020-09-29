@@ -50,7 +50,6 @@ export default {
           this.$router.push('/');
         }else if (response.data.status == false && response.data.validacao){
           //erros de validacao
-          console.log("erros de validacao");
           let erros = '';
           for(let erro of Object.values(response.data.erros)){
             erros += erro + " ";
@@ -64,7 +63,7 @@ export default {
         }
       })
       .catch(e=>{
-        console.log(e)
+
         alert("Erro: Tente novamente mais tarde.")
       });
     }

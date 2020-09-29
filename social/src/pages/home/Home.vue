@@ -26,10 +26,17 @@
     </span>
     <span slot="menuesquerdoamigos">
       <h4>Seguindo</h4>
-      <router-link v-for="item in amigos" :key="item.id" :to="'/pagina/' + item.id + '/' + $slug(item.name)">
-        <li>{{ item.name }}</li>
+      <router-link v-for="item in amigos" :key="item.id + '-seguindo'" :to="'/pagina/' + item.id + '/' + $slug(item.name)">
+        <li >{{ item.name }}</li>
       </router-link>
-      <li v-if="!amigos.length">Nenhum usuário</li>
+      <li v-if="!amigos.length">Seguindo ninguém</li>
+
+      <h4>Seguidores</h4>
+      <router-link v-for="item in seguidores" :key="item.id + '-seguidores'" :to="'/pagina/' + item.id + '/' + $slug(item.name)">
+        <li >{{ item.name }}</li>
+      </router-link>
+      <li v-if="!seguidores.length">Nenhum Seguidor</li>
+
     </span>
     <span slot="principal">
       <publicar-conteudo-vue></publicar-conteudo-vue>
@@ -79,7 +86,8 @@ export default {
       usuario: { imagem: "", name: "" },
       urlProximaPagina: null,
       pararScroll: false,
-      amigos:[]
+      amigos: [],
+      seguidores: []
     };
   },
   created() {
@@ -93,8 +101,6 @@ export default {
           headers: { authorization: "Bearer " + this.$store.getters.getToken },
         })
         .then((response) => {
-          //console.log("Conteudos:");
-          //console.log(response);
           if (response.data.status) {
             this.$store.commit(
               "setConteudosLinhaTempo",
@@ -113,11 +119,10 @@ export default {
                 },
               })
               .then((response) => {
-                //console.log("Conteudos:");
-                //console.log(response);
+
                 if (response.data.status) {
-                  console.log(response.data);
                   this.amigos = response.data.amigos;
+                  this.seguidores = response.data.seguidores;
                 }else{
                   alert(response.data.erro);
                 }
@@ -134,8 +139,6 @@ export default {
   },
   methods: {
     handleScroll() {
-      //console.log(window.scrollY);
-      //console.log(document.body.clientHeight);
       if (this.pararScroll) {
         return;
       }
@@ -158,7 +161,6 @@ export default {
           },
         })
         .then((response) => {
-          //console.log(response);
           if (response.data.status && this.$route.name == "Home") {
             this.$store.commit(
               "setPaginacaoConteudosLinhaTempo",

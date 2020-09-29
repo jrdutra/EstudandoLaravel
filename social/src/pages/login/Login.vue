@@ -43,14 +43,11 @@ export default {
       .then(response=>{
         if(response.data.status){
           //login com sucesso
-          console.log("login com sucesso");
           this.$store.commit('setUsuario', response.data.usuario);
           sessionStorage.setItem('usuario',  JSON.stringify(response.data.usuario));
           this.$router.push('/');
         }else if (response.data.status == false && response.data.validacao){
           //erros de validacao
-          console.log("erros de validacao");
-
           let erros = '';
 
           for(let erro of Object.values(response.data.erros)){
@@ -60,7 +57,6 @@ export default {
 
         }else{
           //login nao existe
-          console.log("login nao existe");
           alert("Login inválido")
         }
       })

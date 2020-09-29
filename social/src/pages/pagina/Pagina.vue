@@ -42,6 +42,12 @@
         <li>{{ item.name }}</li>
       </router-link>
       <li v-if="!amigos.length">Nenhum usuário</li>
+
+      <h4>Seguidores</h4>
+      <router-link v-for="item in seguidores" :key="item.id" :to="'/pagina/' + item.id + '/' + $slug(item.name)">
+        <li>{{ item.name }}</li>
+      </router-link>
+      <li v-if="!seguidores.length">Nenhum Seguidor</li>
     </span>
 
     <span slot="principal">
@@ -97,6 +103,7 @@ export default {
       amigos: [],
       amigosLogado: [],
       textoBtn: "Seguir",
+      seguidores: []
     };
   },
   created() {
@@ -122,8 +129,6 @@ export default {
             }
           )
           .then((response) => {
-            //console.log("Conteudos:");
-            //console.log(response);
             if (response.data.status) {
               this.$store.commit(
                 "setConteudosLinhaTempo",
@@ -152,12 +157,10 @@ export default {
                   }
                 )
                 .then((response) => {
-                  //console.log("Conteudos:");
-                  //console.log(response);
                   if (response.data.status) {
-                    console.log(response.data);
                     this.amigos = response.data.amigos;
                     this.amigosLogado = response.data.amigoslogado;
+                    this.seguidores = response.data.seguidores;
 
                     this.eAmigo();
                   } else {
@@ -196,8 +199,9 @@ export default {
         )
         .then((response) => {
           if (response.data.status) {
-            //console.log(response);
+
             this.amigosLogado = response.data.amigos;
+            this.seguidores = response.data.seguidores;
             this.eAmigo();
           } else {
             alert(response.data.erro);
@@ -210,8 +214,6 @@ export default {
     },
 
     handleScroll() {
-      //console.log(window.scrollY);
-      //console.log(document.body.clientHeight);
       if (this.pararScroll) {
         return;
       }
@@ -234,7 +236,6 @@ export default {
           },
         })
         .then((response) => {
-          //console.log(response);
           if (response.data.status && this.$route.name == "Pagina") {
             this.$store.commit(
               "setPaginacaoConteudosLinhaTempo",

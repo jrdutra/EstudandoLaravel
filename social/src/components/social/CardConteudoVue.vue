@@ -79,9 +79,16 @@ export default {
   },
   methods: {
     curtida(id) {
+      let url = ''
+      if(this.$route.name == "Home"){
+        url = 'conteudo/curtir/';
+      }else{
+        url = 'conteudo/curtirpagina/';
+      }
+
       this.$http
         .put(
-          this.$urlApi + "conteudo/curtir/" + id,
+          this.$urlApi + url + id,
           {},
           {
             headers: {
@@ -110,16 +117,24 @@ export default {
         });
     },
     abreComentarios() {
-      console.log(this.comentarios);
+
       this.exibirComentario = !this.exibirComentario;
     },
     comentar(id) {
       if (!this.textoComentario) {
         return;
       }
+
+      let url = ''
+      if(this.$route.name == "Home"){
+        url = 'conteudo/comentar/';
+      }else{
+        url = 'conteudo/comentarpagina/';
+      }
+
       this.$http
         .put(
-          this.$urlApi + "conteudo/comentar/" + id,
+          this.$urlApi + url + id,
           { texto: this.textoComentario },
           {
             headers: {
@@ -130,8 +145,6 @@ export default {
         .then((response) => {
           if (response.status) {
             this.textoComentario = "";
-            console.log("Retorno do comentario");
-            console.log(response);
             this.$store.commit(
               "setConteudosLinhaTempo",
               response.data.lista.conteudos.data
@@ -141,7 +154,6 @@ export default {
           }
         })
         .catch((e) => {
-          console.log(e);
           alert("Erro, tente novamente mais tarde");
         });
     },

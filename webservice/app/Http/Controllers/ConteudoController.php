@@ -12,8 +12,11 @@ class ConteudoController extends Controller
 
     public function lista(Request $request)
     {
-        $conteudos = Conteudo::with('user')->orderBy('data', 'DESC')->paginate(5);
         $user = $request->user();
+        $amigos = $user->amigos()->pluck('id');
+        $amigos->push($user->id);
+        $conteudos = Conteudo::whereIn('user_id', $amigos)->with('user')->orderBy('data', 'DESC')->paginate(5);
+
 
         foreach ($conteudos as $key => $conteudo) {
             $conteudo->total_curtidas = $conteudo->curtidas()->count();
@@ -91,9 +94,6 @@ class ConteudoController extends Controller
 
     public function curtir($id, Request $request)
     {
-
-
-
         $conteudo = Conteudo::find($id);
         if ($conteudo) {
             $user = $request->user();
@@ -105,6 +105,25 @@ class ConteudoController extends Controller
                 'status' => true,
                 'curtidas' => $conteudo->curtidas()->count(),
                 'lista' => $this->lista($request)
+            ];
+        } else {
+            return ['status' => false, 'erro' => 'Conteúo não existe'];
+        }
+    }
+
+    public function curtirpagina($id, Request $request)
+    {
+        $conteudo = Conteudo::find($id);
+        if ($conteudo) {
+            $user = $request->user();
+            $user->curtidas()->toggle($conteudo->id);
+
+            //return $conteudo->curtidas()->count();
+            //return $conteudo->curtidas;
+            return [
+                'status' => true,
+                'curtidas' => $conteudo->curtidas()->count(),
+                'lista' => $this->pagina($conteudo->user_id, $request)
             ];
         } else {
             return ['status' => false, 'erro' => 'Conteúo não existe'];
@@ -126,6 +145,27 @@ class ConteudoController extends Controller
             return [
                 'status' => true,
                 'lista' => $this->lista($request)
+            ];
+        } else {
+            return ['status' => false, 'erro' => 'Conteúo não existe'];
+        }
+    }
+
+    public function comentarpagina($id, Request $request)
+    {
+        $conteudo = Conteudo::find($id);
+        if ($conteudo) {
+            $user = $request->user();
+
+            $user->comentarios()->create([
+                'conteudo_id' => $conteudo->id,
+                'texto' => $request->texto,
+                'data' => date('Y-m-d H:i:s')
+            ]);
+
+            return [
+                'status' => true,
+                'lista' => $this->pagina($conteudo->user_id, $request)
             ];
         } else {
             return ['status' => false, 'erro' => 'Conteúo não existe'];

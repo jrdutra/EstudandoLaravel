@@ -50,7 +50,6 @@ export default {
   },
   methods: {
     addConteudo() {
-      console.log(this.conteudo);
       this.$http
         .post(
           this.$urlApi + "conteudo/adicionar",
@@ -68,15 +67,13 @@ export default {
         )
         .then((response) => {
           if (response.data.status) {
-            console.log(response.data);
+
             this.conteudo = { titulo: "", link: "", imagem: "" };
             this.$store.commit(
               "setConteudosLinhaTempo",
               response.data.conteudos.data
             );
           } else if(response.data.status == false && response.data.validacao){
-            //erros de validacao
-            //console.log("erros de validacao");
             let erros = "";
             for (let erro of Object.values(response.data.erros)) {
               erros += erro + " ";
@@ -85,7 +82,7 @@ export default {
           }
         })
         .catch((e) => {
-          console.log(e);
+
           alert("Erro, tente novamente mais tarde.");
         });
     },
