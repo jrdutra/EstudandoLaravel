@@ -270,7 +270,7 @@ return [
 
 ## Comandos importantes
 
-**Rodar o projeto** 
+#### Rodar o projeto 
 
 Dentro da pasta do projeto, executar o seguinte comando:
 
@@ -278,7 +278,11 @@ Dentro da pasta do projeto, executar o seguinte comando:
 npm run dev
 ```
 
+#### Compilar/Buildar projeto
 
+Dentro da pasta do projeto, executar o seguinte comando:
 
-
+```
+npm run build
+```
 
