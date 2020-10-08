@@ -13,11 +13,11 @@ sudo apt install wget php-cli php-zip php-mbstring php-xml unzip
 ```
 
 ```
-mkdir ~/Programas 
+mkdir ~/Programas
 ```
 
 ```
-mkdir ~/Programas/composer 
+mkdir ~/Programas/composer
 ```
 
 ```
@@ -114,14 +114,14 @@ Abra o arquivo **ModifyHeadersMiddleware** e altere o método handle():
 
 
 ```php
-public function handle($request, Closure $next) 
-{ 
-    $response = $next($request); 
-    $response->header('Access-Control-Allow-Origin', '*'); 
-    $response->header('Access-Control-Allow-Headers', 'Origin, Content-Type'); 
+public function handle($request, Closure $next)
+{
+    $response = $next($request);
+    $response->header('Access-Control-Allow-Origin', '*');
+    $response->header('Access-Control-Allow-Headers', 'Origin, Content-Type');
 
-    return $response; 
-} 
+    return $response;
+}
 ```
 
 Abra app / Http / Kernel.php e adicione a classe ModifyHeadersMiddlewar e na matriz .protected $middleware
@@ -270,7 +270,7 @@ return [
 
 ## Comandos importantes
 
-#### Rodar o projeto 
+#### Rodar o projeto
 
 Dentro da pasta do projeto, executar o seguinte comando:
 
