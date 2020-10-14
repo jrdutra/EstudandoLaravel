@@ -22,6 +22,11 @@ class User extends Authenticatable
         'name', 'email', 'password',
     ];
 
+    public function proprietario()
+    {
+        return $this->hasOne('App\Proprietario', 'user_id', 'id');
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *

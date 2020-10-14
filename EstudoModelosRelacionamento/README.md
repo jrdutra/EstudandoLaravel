@@ -33,3 +33,7 @@ https://laravel.com/docs/5.7/migrations
 e 
 
 https://laravel.com/docs/5.7/migrations#creating-tables
+
+Para criar as chaves estrangeiras:
+
+https://laravel.com/docs/4.2/schema
