@@ -1,3 +1,8 @@
+# Demonstração da Tecnologia
+
+**Clique na imagem para visualizar o vídeo**
+[![laravel and vue](https://raw.githubusercontent.com/jrdutra/EstudandoLaravel/master/repositorySources/capa.png)](https://www.youtube.com/watch?v=iIhKAVb37Hg)
+
 # Passos para instalar o Laravel + Composer: #
 
 # (LINUX) #
